@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Meta Muse — R1 Launcher</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  html, body { height:100%; }
+  body {
+    font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    background:#010402;
+    color:#d8ffe9;
+    overflow:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    position:relative;
+    min-height:100vh;
+  }
+  /* starfield */
+  .stars, .stars2 {
+    position:absolute; inset:0; pointer-events:none;
+    background-image:
+      radial-gradient(1px 1px at 20px 30px, #bfffd9 50%, transparent 51%),
+      radial-gradient(1px 1px at 130px 90px, #8be9ff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 70px 150px, #eafff2 50%, transparent 51%),
+      radial-gradient(1px 1px at 190px 60px, #76ff9e 50%, transparent 51%),
+      radial-gradient(1px 1px at 40px 210px, #aef 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 220px 180px, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 100px 250px, #9fffcf 50%, transparent 51%),
+      radial-gradient(1px 1px at 160px 130px, #dff 50%, transparent 51%);
+    background-size:240px 282px;
+    animation: drift 9s linear infinite;
+    opacity:.8;
+  }
+  .stars2 { animation-duration:16s; opacity:.45; background-size:180px 220px; }
+  @keyframes drift { from { background-position:0 0; } to { background-position:0 -282px; } }
+  /* nebula glow */
+  .nebula {
+    position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 90% 45% at 50% 38%, rgba(118,185,0,.28), transparent 65%),
+      radial-gradient(ellipse 70% 35% at 50% 95%, rgba(0,229,255,.14), transparent 70%),
+      radial-gradient(ellipse 120% 60% at 50% -10%, rgba(57,255,136,.10), transparent 60%);
+  }
+  .portal-wrap { position:relative; width:148px; height:148px; margin-top:6px; }
+  .ring, .ring2 {
+    position:absolute; inset:0; border-radius:50%;
+    border:2px dashed rgba(118,255,140,.65);
+    animation: spin 14s linear infinite;
+  }
+  .ring2 { inset:9px; border:1px solid rgba(0,229,255,.5); border-top-color:transparent; border-bottom-color:transparent; animation: spinr 9s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  @keyframes spinr { to { transform:rotate(-360deg); } }
+  .portal {
+    position:absolute; inset:16px; border-radius:50%; overflow:hidden;
+    border:2px solid rgba(140,255,170,.9);
+    box-shadow:0 0 22px rgba(118,255,140,.55), 0 0 55px rgba(0,229,255,.25), inset 0 0 18px rgba(0,0,0,.6);
+    animation: pulse 2.6s ease-in-out infinite;
+    background:#02140a;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow:0 0 16px rgba(118,255,140,.45), 0 0 40px rgba(0,229,255,.18); }
+    50%     { box-shadow:0 0 30px rgba(118,255,140,.8),  0 0 70px rgba(0,229,255,.35); }
+  }
+  .portal video, .portal img { width:100%; height:100%; object-fit:cover; display:block; }
+  h1 {
+    margin-top:10px; font-size:25px; font-weight:800; letter-spacing:6px; text-indent:6px;
+    color:#eafff2; text-shadow:0 0 12px rgba(118,255,140,.85), 0 0 30px rgba(0,229,255,.4);
+  }
+  .sub {
+    margin-top:2px; font-size:10px; letter-spacing:3px; text-indent:3px; color:#39ff88;
+    text-shadow:0 0 8px rgba(57,255,136,.8); text-transform:uppercase;
+  }
+  .btn {
+    margin-top:12px; display:inline-block; text-decoration:none;
+    font-size:15px; font-weight:700; letter-spacing:3px; text-indent:3px;
+    color:#02140a; background:linear-gradient(180deg,#8dff5a,#4fd100);
+    padding:11px 26px; border-radius:999px; border:1px solid #b6ff8d;
+    box-shadow:0 0 18px rgba(118,255,140,.65), inset 0 1px 0 rgba(255,255,255,.6);
+    animation: btnpulse 1.8s ease-in-out infinite;
+  }
+  @keyframes btnpulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.045); } }
+  .note { margin-top:9px; font-size:9.5px; color:#7fd8a8; letter-spacing:1px; text-align:center; padding:0 14px; line-height:1.5; }
+  .bar { margin-top:7px; width:150px; height:3px; background:rgba(118,255,140,.18); border-radius:2px; overflow:hidden; }
+  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#39ff88,#00e5ff); animation: fill 4s linear forwards; }
+  @keyframes fill { to { width:100%; } }
+</style>
+</head>
+<body>
+  <div class="stars"></div><div class="stars2"></div><div class="nebula"></div>
+
+  <div class="portal-wrap">
+    <div class="ring"></div><div class="ring2"></div>
+    <div class="portal">
+      <video autoplay muted loop playsinline poster="avatar.png">
+        <source src="avatar.mp4" type="video/mp4">
+        <img src="avatar.png" alt="Meta Muse">
+      </video>
+    </div>
+  </div>
+
+  <h1>META&nbsp;MUSE</h1>
+  <div class="sub">Uplink // muse.ai</div>
+
+  <a class="btn" href="https://muse.ai">ENTER&nbsp;MUSE</a>
+  <div class="bar"><i></i></div>
+  <div class="note">Auto-launching in 4 seconds&hellip;<br>Sign in once &mdash; Muse may keep your session on this device.</div>
+
+<script>
+  var t = setTimeout(function(){ window.location.href = "https://muse.ai"; }, 4000);
+  document.addEventListener("click", function(){ clearTimeout(t); }, { once:true });
+</script>
+</body>
+</html>
