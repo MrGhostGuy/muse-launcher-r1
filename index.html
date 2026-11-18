@@ -9,16 +9,10 @@
   html, body { height:100%; }
   body {
     font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-    background:#010402;
-    color:#d8ffe9;
-    overflow:hidden;
-    display:flex; flex-direction:column; align-items:center; justify-content:space-evenly;
-    position:relative;
-    height:100vh; height:100dvh;
-    padding:4px 8px 6px;
-    text-align:center;
+    background:#010402; color:#d8ffe9; overflow:hidden;
+    display:flex; flex-direction:column; position:relative;
+    height:100vh; height:100dvh; text-align:center;
   }
-  /* starfield */
   .stars, .stars2 {
     position:absolute; inset:0; pointer-events:none;
     background-image:
@@ -30,9 +24,7 @@
       radial-gradient(1.5px 1.5px at 220px 180px, #fff 50%, transparent 51%),
       radial-gradient(1px 1px at 100px 250px, #9fffcf 50%, transparent 51%),
       radial-gradient(1px 1px at 160px 130px, #dff 50%, transparent 51%);
-    background-size:240px 282px;
-    animation: drift 9s linear infinite;
-    opacity:.8;
+    background-size:240px 282px; animation: drift 9s linear infinite; opacity:.8;
   }
   .stars2 { animation-duration:16s; opacity:.45; background-size:180px 220px; }
   @keyframes drift { from { background-position:0 0; } to { background-position:0 -282px; } }
@@ -43,140 +35,272 @@
       radial-gradient(ellipse 70% 35% at 50% 95%, rgba(0,229,255,.14), transparent 70%),
       radial-gradient(ellipse 120% 60% at 50% -10%, rgba(57,255,136,.10), transparent 60%);
   }
-  /* avatar portal — whole portal is a tap target */
-  .portal-wrap { position:relative; width:86px; height:86px; flex:0 0 auto; display:block; text-decoration:none; }
-  .ring, .ring2 {
-    position:absolute; inset:0; border-radius:50%;
-    border:2px dashed rgba(118,255,140,.65);
-    animation: spin 14s linear infinite;
+  .hud {
+    position:relative; z-index:2; display:flex; justify-content:space-between; align-items:center;
+    padding:4px 10px 0; font-size:10.5px; letter-spacing:2px; color:#39ff88;
+    text-shadow:0 0 7px rgba(57,255,136,.75);
   }
-  .ring2 { inset:7px; border:1px solid rgba(0,229,255,.5); border-top-color:transparent; border-bottom-color:transparent; animation: spinr 9s linear infinite; }
+  .hud .dot { color:#00e5ff; }
+  .view { position:relative; z-index:2; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:space-evenly; padding:2px 8px 6px; min-height:0; }
+  .hidden { display:none !important; }
+
+  /* avatar portal */
+  .portal-wrap { position:relative; width:80px; height:80px; flex:0 0 auto; cursor:pointer; }
+  .ring, .ring2 { position:absolute; inset:0; border-radius:50%; border:2px dashed rgba(118,255,140,.65); animation: spin 14s linear infinite; }
+  .ring2 { inset:6px; border:1px solid rgba(0,229,255,.5); border-top-color:transparent; border-bottom-color:transparent; animation: spinr 9s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
   @keyframes spinr { to { transform:rotate(-360deg); } }
   .portal {
-    position:absolute; inset:9px; border-radius:50%; overflow:hidden;
-    border:2px solid rgba(140,255,170,.9);
+    position:absolute; inset:10px; border-radius:50%; overflow:hidden;
+    border:2px solid rgba(140,255,170,.9); background:#02140a;
     box-shadow:0 0 22px rgba(118,255,140,.55), 0 0 55px rgba(0,229,255,.25), inset 0 0 18px rgba(0,0,0,.6);
     animation: pulse 2.6s ease-in-out infinite;
-    background:#02140a;
   }
   @keyframes pulse {
     0%,100% { box-shadow:0 0 16px rgba(118,255,140,.45), 0 0 40px rgba(0,229,255,.18); }
     50%     { box-shadow:0 0 30px rgba(118,255,140,.8),  0 0 70px rgba(0,229,255,.35); }
   }
   .portal video, .portal img { width:100%; height:100%; object-fit:cover; display:block; }
-  h1 {
-    font-size:21px; font-weight:800; letter-spacing:5px; text-indent:5px; line-height:1.1;
-    color:#eafff2; text-shadow:0 0 12px rgba(118,255,140,.85), 0 0 30px rgba(0,229,255,.4);
-  }
-  .sub {
-    font-size:10.5px; letter-spacing:3px; text-indent:3px; color:#39ff88; margin-top:1px;
-    text-shadow:0 0 8px rgba(57,255,136,.8); text-transform:uppercase;
-  }
+  .mood { font-size:9.5px; letter-spacing:2.5px; color:#7fd8a8; text-transform:uppercase; }
+  .mood b { color:#39ff88; }
+  h1 { font-size:21px; font-weight:800; letter-spacing:5px; text-indent:5px; line-height:1.05; color:#eafff2; text-shadow:0 0 12px rgba(118,255,140,.85), 0 0 30px rgba(0,229,255,.4); }
+  .sub { font-size:10px; letter-spacing:3px; text-indent:3px; color:#39ff88; text-shadow:0 0 8px rgba(57,255,136,.8); text-transform:uppercase; }
   .btn {
-    display:flex; align-items:center; justify-content:center;
-    min-height:44px; min-width:200px; text-decoration:none;
-    font-size:16px; font-weight:700; letter-spacing:3px; text-indent:3px;
+    display:flex; align-items:center; justify-content:center; text-decoration:none;
+    min-height:42px; min-width:204px;
+    font-size:15.5px; font-weight:700; letter-spacing:3px; text-indent:3px;
     color:#02140a; background:linear-gradient(180deg,#8dff5a,#4fd100);
-    padding:10px 22px; border-radius:999px; border:1px solid #b6ff8d;
+    padding:8px 20px; border-radius:999px; border:1px solid #b6ff8d;
     box-shadow:0 0 18px rgba(118,255,140,.65), inset 0 1px 0 rgba(255,255,255,.6);
     animation: btnpulse 1.8s ease-in-out infinite;
   }
-  @keyframes btnpulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.045); } }
-
   .btn.talk {
-    background:linear-gradient(180deg,#4de8ff,#0098c8);
-    border-color:#9df3ff; color:#02141c;
-    box-shadow:0 0 18px rgba(0,229,255,.55), inset 0 1px 0 rgba(255,255,255,.6);
-    animation-delay:.9s;
+    background:linear-gradient(180deg,#4de8ff,#0098c8); border-color:#9df3ff; color:#02141c;
+    box-shadow:0 0 18px rgba(0,229,255,.55), inset 0 1px 0 rgba(255,255,255,.6); animation-delay:.9s;
   }
   .btn svg { margin-right:8px; flex:0 0 auto; }
-  .status { font-size:11.5px; color:#a9f5c6; letter-spacing:.5px; line-height:1.45; min-height:17px; }
+  @keyframes btnpulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.04); } }
+  .status { font-size:11px; color:#a9f5c6; letter-spacing:.5px; line-height:1.4; min-height:15px; }
   .status b { color:#39ff88; }
-  .bar { width:150px; height:3px; background:rgba(118,255,140,.18); border-radius:2px; overflow:hidden; margin-top:3px; }
-  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#39ff88,#00e5ff); }
-  .bar.go i { animation: fill 5s linear forwards; }
-  @keyframes fill { to { width:100%; } }
-  .toggle {
-    margin-top:4px; font-size:10.5px; letter-spacing:1.5px; color:#7fd8a8;
-    background:none; border:1px solid rgba(118,255,140,.35); border-radius:999px;
-    padding:6px 14px; min-height:30px; cursor:pointer; text-transform:uppercase;
+  .row { display:flex; gap:8px; align-items:center; }
+  .pill {
+    font-size:10px; letter-spacing:1.5px; color:#7fd8a8; text-transform:uppercase;
+    background:rgba(2,20,10,.55); border:1px solid rgba(118,255,140,.35); border-radius:999px;
+    padding:6px 13px; min-height:30px; cursor:pointer; font-family:inherit;
   }
-  .toggle b { color:#39ff88; }
+  .pill b { color:#39ff88; }
+  .pill.go { color:#02140a; background:linear-gradient(180deg,#8dff5a,#4fd100); font-weight:700; border-color:#b6ff8d; }
+
+  /* skills deck */
+  .deck-title { font-size:15px; font-weight:800; letter-spacing:3px; color:#eafff2; text-shadow:0 0 10px rgba(118,255,140,.8); margin:2px 0 4px; }
+  .deck { width:100%; flex:1; min-height:0; overflow-y:auto; -webkit-overflow-scrolling:touch; padding:2px 2px 4px; }
+  .card {
+    display:block; width:100%; text-align:left; cursor:pointer; font-family:inherit;
+    background:rgba(3,26,14,.72); border:1px solid rgba(118,255,140,.35); border-radius:12px;
+    padding:8px 10px; margin:0 0 7px; color:#d8ffe9;
+    box-shadow:0 0 10px rgba(0,229,255,.08), inset 0 0 12px rgba(118,255,140,.05);
+  }
+  .card:active { border-color:#39ff88; background:rgba(6,44,22,.85); }
+  .tag { font-size:8.5px; font-weight:700; letter-spacing:2px; color:#00e5ff; text-transform:uppercase; }
+  .card h3 { font-size:13.5px; margin:1px 0 2px; color:#eafff2; letter-spacing:.5px; }
+  .card p { font-size:10.5px; line-height:1.35; color:#9fd8b4; }
+  .toast {
+    position:absolute; left:10px; right:10px; bottom:10px; z-index:5;
+    background:rgba(2,24,12,.95); border:1px solid #39ff88; border-radius:12px;
+    color:#d8ffe9; font-size:11.5px; line-height:1.45; padding:9px 11px;
+    box-shadow:0 0 22px rgba(57,255,136,.45); display:none;
+  }
+  .toast b { color:#39ff88; }
 </style>
 </head>
 <body>
   <div class="stars"></div><div class="stars2"></div><div class="nebula"></div>
 
-  <a class="portal-wrap" href="https://muse.ai" id="portalLink" aria-label="Open Muse">
-    <div class="ring"></div><div class="ring2"></div>
-    <div class="portal">
-      <video autoplay muted loop playsinline preload="auto" poster="avatar.png">
-        <source src="avatar.mp4" type="video/mp4">
-        <img src="avatar.png" alt="Meta Muse">
-      </video>
+  <div class="hud"><span id="clock">--:--</span><span><span class="dot">&#9679;</span> MUSE&nbsp;OS</span><span id="date">&nbsp;</span></div>
+
+  <!-- LAUNCH VIEW -->
+  <div class="view" id="launchView">
+    <div class="portal-wrap" id="portalTap" title="Tap to change mood">
+      <div class="ring"></div><div class="ring2"></div>
+      <div class="portal">
+        <video id="avatarVideo" autoplay muted loop playsinline preload="auto" poster="avatar.png">
+          <source src="avatar.mp4" type="video/mp4">
+          <img src="avatar.png" alt="Meta Muse">
+        </video>
+      </div>
     </div>
-  </a>
+    <div class="mood">Mood: <b id="moodName">Idle</b> &mdash; tap avatar</div>
 
-  <div>
-    <h1>META&nbsp;MUSE</h1>
-    <div class="sub">Uplink // muse.ai</div>
+    <div>
+      <h1>META&nbsp;MUSE</h1>
+      <div class="sub">Uplink // muse.ai</div>
+    </div>
+
+    <a class="btn" href="https://muse.ai">ENTER&nbsp;MUSE</a>
+    <a class="btn talk" href="https://muse.ai"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#02141c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3" fill="#02141c" stroke="none"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>TALK&nbsp;TO&nbsp;MUSE</a>
+
+    <div class="status" id="status">Sign in once &mdash; then tap the <b>phone button</b> in Muse to talk live.</div>
+
+    <div class="row">
+      <button class="pill" id="autoToggle" type="button">Auto-launch: <b id="autoState">ON</b></button>
+      <button class="pill go" id="skillsBtn" type="button">Skills&nbsp;Deck&nbsp;&#9654;</button>
+    </div>
   </div>
 
-  <a class="btn" href="https://muse.ai">ENTER&nbsp;MUSE</a>
-  <a class="btn talk" href="https://muse.ai"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#02141c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="12" rx="3" fill="#02141c" stroke="none"/><path d="M5 10a7 7 0 0 0 14 0"/><line x1="12" y1="19" x2="12" y2="22"/></svg>TALK&nbsp;TO&nbsp;MUSE</a>
-
-  <div>
-    <div class="status" id="status">Sign in once &mdash; then tap the <b>phone<br>button</b> in Muse to talk live.</div>
-    <div class="bar" id="bar"><i></i></div>
-    <button class="toggle" id="autoToggle" type="button">Auto-launch: <b id="autoState">ON</b></button>
+  <!-- SKILLS VIEW -->
+  <div class="view hidden" id="skillsView">
+    <div class="deck-title">MUSE&nbsp;SKILLS&nbsp;DECK</div>
+    <div class="deck" id="deck"></div>
+    <div class="row">
+      <button class="pill" id="backBtn" type="button">&#9664;&nbsp;Back</button>
+      <span style="font-size:9.5px;color:#7fd8a8;letter-spacing:1px;">TAP A CARD = COPY + OPEN MUSE</span>
+    </div>
   </div>
+
+  <div class="toast" id="toast"></div>
 
 <script>
   var DEST = "https://muse.ai";
+
+  /* live HUD clock */
+  function tickClock() {
+    var n = new Date();
+    var h = n.getHours() % 12; if (h === 0) h = 12;
+    var m = ("0" + n.getMinutes()).slice(-2);
+    var ap = n.getHours() >= 12 ? "PM" : "AM";
+    document.getElementById("clock").textContent = h + ":" + m + " " + ap;
+    var days = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    document.getElementById("date").textContent = days[n.getDay()] + " " + (n.getMonth()+1) + "/" + n.getDate();
+  }
+  tickClock(); setInterval(tickClock, 1000);
+
+  /* avatar moods */
+  var moods = [
+    { name: "Idle",     src: "avatar.mp4" },
+    { name: "Working",  src: "mood-working.mp4" },
+    { name: "Building", src: "mood-making.mp4" },
+    { name: "Level Up", src: "mood-levelup.mp4" }
+  ];
+  var moodIdx = 0;
+  var video = document.getElementById("avatarVideo");
+  document.getElementById("portalTap").addEventListener("click", function() {
+    moodIdx = (moodIdx + 1) % moods.length;
+    document.getElementById("moodName").textContent = moods[moodIdx].name;
+    video.innerHTML = "";
+    var s = document.createElement("source");
+    s.src = moods[moodIdx].src; s.type = "video/mp4";
+    video.appendChild(s);
+    video.load();
+    var p = video.play(); if (p && p.catch) p.catch(function(){});
+  });
+
+  /* auto-launch */
   var statusEl = document.getElementById("status");
-  var barEl = document.getElementById("bar");
   var autoStateEl = document.getElementById("autoState");
-  var timer = null, countdown = null, secs = 5;
-
-  var auto = true;
+  var timer = null, countdown = null, secs = 5, auto = true;
   try { auto = localStorage.getItem("museLauncherAuto") !== "off"; } catch (e) {}
-
   function renderAuto() { autoStateEl.textContent = auto ? "ON" : "OFF"; }
   function stopAuto(msg) {
     if (timer) { clearTimeout(timer); timer = null; }
     if (countdown) { clearInterval(countdown); countdown = null; }
-    barEl.classList.remove("go");
     if (msg) statusEl.innerHTML = msg;
   }
   function startAuto() {
     stopAuto();
     secs = 5;
     statusEl.innerHTML = "Launching Muse in <b>" + secs + "</b>&hellip; tap TALK or ENTER to go now.";
-    barEl.classList.add("go");
     countdown = setInterval(function() {
       secs--;
-      if (secs > 0) { statusEl.innerHTML = "Launching Muse in <b>" + secs + "</b>&hellip; tap TALK or ENTER to go now."; }
+      if (secs > 0) statusEl.innerHTML = "Launching Muse in <b>" + secs + "</b>&hellip; tap TALK or ENTER to go now.";
     }, 1000);
     timer = setTimeout(function() { window.location.href = DEST; }, 5000);
   }
-
   document.getElementById("autoToggle").addEventListener("click", function(ev) {
-    ev.preventDefault(); ev.stopPropagation();
+    ev.stopPropagation();
     auto = !auto;
     try { localStorage.setItem("museLauncherAuto", auto ? "on" : "off"); } catch (e) {}
     renderAuto();
-    if (auto) { startAuto(); }
-    else { stopAuto("Auto-launch off. Tap <b>ENTER MUSE</b><br>whenever you're ready."); }
+    if (auto) startAuto();
+    else stopAuto("Auto-launch off. Tap <b>ENTER MUSE</b> whenever you're ready.");
+  });
+  document.body.addEventListener("click", function() {
+    if (timer) stopAuto("Auto-launch paused. Tap <b>ENTER MUSE</b><br>whenever you're ready.");
   });
 
-  // Any tap outside the toggle and links pauses the countdown so the screen can be enjoyed.
-  document.body.addEventListener("click", function() {
-    if (timer) { stopAuto("Auto-launch paused. Tap <b>ENTER MUSE</b><br>whenever you're ready."); }
+  /* views */
+  var launchView = document.getElementById("launchView");
+  var skillsView = document.getElementById("skillsView");
+  document.getElementById("skillsBtn").addEventListener("click", function(ev) {
+    ev.stopPropagation();
+    stopAuto();
+    launchView.classList.add("hidden");
+    skillsView.classList.remove("hidden");
+  });
+  document.getElementById("backBtn").addEventListener("click", function(ev) {
+    ev.stopPropagation();
+    skillsView.classList.add("hidden");
+    launchView.classList.remove("hidden");
+    stopAuto("Auto-launch paused. Tap <b>ENTER MUSE</b><br>whenever you're ready.");
+  });
+
+  /* skills deck */
+  var skills = [
+    { tag: "Money",  title: "Paid Survey Scan",
+      prompt: "Check all my inboxes for new paid surveys and focus groups paying $50 or more, and flag anything time-sensitive." },
+    { tag: "News",   title: "Evening Briefing",
+      prompt: "Give me my evening briefing: local Sand Springs news, new MW4 glitches, and anything important in my inboxes." },
+    { tag: "Money",  title: "Survey Qualifier Help",
+      prompt: "Help me complete a paid survey qualifier in a live session, using my real profile info." },
+    { tag: "Games",  title: "MW4 Glitch Hunt",
+      prompt: "Find the newest working Call of Duty MW4 multiplayer and DMZ glitches, out-of-map and nuke spots first." },
+    { tag: "Play",   title: "Destroy the Cube",
+      prompt: "Play co-op Destroy the Cube with me." },
+    { tag: "Games",  title: "Best Sniper Loadout",
+      prompt: "What's the best sniper and full loadout in Once Human right now?" },
+    { tag: "Music",  title: "Make Me a Song",
+      prompt: "Write and perform an original song for me — I'll give you the genre mashup and the topic." },
+    { tag: "Help",   title: "My Creation Codes",
+      prompt: "Show me my Rabbit R1 creation codes." }
+  ];
+  var deck = document.getElementById("deck");
+  var toast = document.getElementById("toast");
+  function showToast(html, ms, thenOpen) {
+    toast.innerHTML = html;
+    toast.style.display = "block";
+    setTimeout(function() {
+      toast.style.display = "none";
+      if (thenOpen) window.location.href = DEST;
+    }, ms);
+  }
+  function copyText(t, done) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(t).then(function(){ done(true); }, function(){ done(false); });
+    } else {
+      try {
+        var ta = document.createElement("textarea");
+        ta.value = t; ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        var ok = document.execCommand("copy");
+        document.body.removeChild(ta); done(!!ok);
+      } catch (e) { done(false); }
+    }
+  }
+  skills.forEach(function(sk) {
+    var c = document.createElement("button");
+    c.className = "card"; c.type = "button";
+    c.innerHTML = '<span class="tag">' + sk.tag + '</span><h3>' + sk.title + '</h3><p>' + sk.prompt + '</p>';
+    c.addEventListener("click", function(ev) {
+      ev.stopPropagation();
+      copyText(sk.prompt, function(ok) {
+        if (ok) showToast("<b>Copied!</b> Opening Muse — paste it in the chat and send.", 1000, true);
+        else showToast("Opening Muse — say or type this: <b>\"" + sk.prompt + "\"</b>", 2800, true);
+      });
+    });
+    deck.appendChild(c);
   });
 
   renderAuto();
-  if (auto) { startAuto(); }
+  if (auto) startAuto();
 </script>
 </body>
 </html>
