@@ -12,9 +12,11 @@
     background:#010402;
     color:#d8ffe9;
     overflow:hidden;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    display:flex; flex-direction:column; align-items:center; justify-content:space-evenly;
     position:relative;
-    min-height:100vh;
+    height:100vh; height:100dvh;
+    padding:6px 8px 8px;
+    text-align:center;
   }
   /* starfield */
   .stars, .stars2 {
@@ -34,25 +36,25 @@
   }
   .stars2 { animation-duration:16s; opacity:.45; background-size:180px 220px; }
   @keyframes drift { from { background-position:0 0; } to { background-position:0 -282px; } }
-  /* nebula glow */
   .nebula {
     position:absolute; inset:0; pointer-events:none;
     background:
-      radial-gradient(ellipse 90% 45% at 50% 38%, rgba(118,185,0,.28), transparent 65%),
+      radial-gradient(ellipse 90% 45% at 50% 36%, rgba(118,185,0,.28), transparent 65%),
       radial-gradient(ellipse 70% 35% at 50% 95%, rgba(0,229,255,.14), transparent 70%),
       radial-gradient(ellipse 120% 60% at 50% -10%, rgba(57,255,136,.10), transparent 60%);
   }
-  .portal-wrap { position:relative; width:148px; height:148px; margin-top:6px; }
+  /* avatar portal — whole portal is a tap target */
+  .portal-wrap { position:relative; width:104px; height:104px; flex:0 0 auto; display:block; text-decoration:none; }
   .ring, .ring2 {
     position:absolute; inset:0; border-radius:50%;
     border:2px dashed rgba(118,255,140,.65);
     animation: spin 14s linear infinite;
   }
-  .ring2 { inset:9px; border:1px solid rgba(0,229,255,.5); border-top-color:transparent; border-bottom-color:transparent; animation: spinr 9s linear infinite; }
+  .ring2 { inset:7px; border:1px solid rgba(0,229,255,.5); border-top-color:transparent; border-bottom-color:transparent; animation: spinr 9s linear infinite; }
   @keyframes spin { to { transform:rotate(360deg); } }
   @keyframes spinr { to { transform:rotate(-360deg); } }
   .portal {
-    position:absolute; inset:16px; border-radius:50%; overflow:hidden;
+    position:absolute; inset:11px; border-radius:50%; overflow:hidden;
     border:2px solid rgba(140,255,170,.9);
     box-shadow:0 0 22px rgba(118,255,140,.55), 0 0 55px rgba(0,229,255,.25), inset 0 0 18px rgba(0,0,0,.6);
     animation: pulse 2.6s ease-in-out infinite;
@@ -64,51 +66,108 @@
   }
   .portal video, .portal img { width:100%; height:100%; object-fit:cover; display:block; }
   h1 {
-    margin-top:10px; font-size:25px; font-weight:800; letter-spacing:6px; text-indent:6px;
+    font-size:21px; font-weight:800; letter-spacing:5px; text-indent:5px; line-height:1.1;
     color:#eafff2; text-shadow:0 0 12px rgba(118,255,140,.85), 0 0 30px rgba(0,229,255,.4);
   }
   .sub {
-    margin-top:2px; font-size:10px; letter-spacing:3px; text-indent:3px; color:#39ff88;
+    font-size:10.5px; letter-spacing:3px; text-indent:3px; color:#39ff88; margin-top:1px;
     text-shadow:0 0 8px rgba(57,255,136,.8); text-transform:uppercase;
   }
   .btn {
-    margin-top:12px; display:inline-block; text-decoration:none;
-    font-size:15px; font-weight:700; letter-spacing:3px; text-indent:3px;
+    display:flex; align-items:center; justify-content:center;
+    min-height:46px; min-width:196px; text-decoration:none;
+    font-size:16px; font-weight:700; letter-spacing:3px; text-indent:3px;
     color:#02140a; background:linear-gradient(180deg,#8dff5a,#4fd100);
-    padding:11px 26px; border-radius:999px; border:1px solid #b6ff8d;
+    padding:10px 22px; border-radius:999px; border:1px solid #b6ff8d;
     box-shadow:0 0 18px rgba(118,255,140,.65), inset 0 1px 0 rgba(255,255,255,.6);
     animation: btnpulse 1.8s ease-in-out infinite;
   }
   @keyframes btnpulse { 0%,100% { transform:scale(1); } 50% { transform:scale(1.045); } }
-  .note { margin-top:9px; font-size:9.5px; color:#7fd8a8; letter-spacing:1px; text-align:center; padding:0 14px; line-height:1.5; }
-  .bar { margin-top:7px; width:150px; height:3px; background:rgba(118,255,140,.18); border-radius:2px; overflow:hidden; }
-  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#39ff88,#00e5ff); animation: fill 4s linear forwards; }
+  .status { font-size:11.5px; color:#a9f5c6; letter-spacing:.5px; line-height:1.45; min-height:17px; }
+  .status b { color:#39ff88; }
+  .bar { width:150px; height:3px; background:rgba(118,255,140,.18); border-radius:2px; overflow:hidden; margin-top:3px; }
+  .bar i { display:block; height:100%; width:0; background:linear-gradient(90deg,#39ff88,#00e5ff); }
+  .bar.go i { animation: fill 5s linear forwards; }
   @keyframes fill { to { width:100%; } }
+  .toggle {
+    margin-top:4px; font-size:10.5px; letter-spacing:1.5px; color:#7fd8a8;
+    background:none; border:1px solid rgba(118,255,140,.35); border-radius:999px;
+    padding:6px 14px; min-height:30px; cursor:pointer; text-transform:uppercase;
+  }
+  .toggle b { color:#39ff88; }
 </style>
 </head>
 <body>
   <div class="stars"></div><div class="stars2"></div><div class="nebula"></div>
 
-  <div class="portal-wrap">
+  <a class="portal-wrap" href="https://muse.ai" id="portalLink" aria-label="Open Muse">
     <div class="ring"></div><div class="ring2"></div>
     <div class="portal">
-      <video autoplay muted loop playsinline poster="avatar.png">
+      <video autoplay muted loop playsinline preload="auto" poster="avatar.png">
         <source src="avatar.mp4" type="video/mp4">
         <img src="avatar.png" alt="Meta Muse">
       </video>
     </div>
+  </a>
+
+  <div>
+    <h1>META&nbsp;MUSE</h1>
+    <div class="sub">Uplink // muse.ai</div>
   </div>
 
-  <h1>META&nbsp;MUSE</h1>
-  <div class="sub">Uplink // muse.ai</div>
-
   <a class="btn" href="https://muse.ai">ENTER&nbsp;MUSE</a>
-  <div class="bar"><i></i></div>
-  <div class="note">Auto-launching in 4 seconds&hellip;<br>Sign in once &mdash; Muse may keep your session on this device.</div>
+
+  <div>
+    <div class="status" id="status">Sign in once &mdash; Muse may keep<br>your session on this device.</div>
+    <div class="bar" id="bar"><i></i></div>
+    <button class="toggle" id="autoToggle" type="button">Auto-launch: <b id="autoState">ON</b></button>
+  </div>
 
 <script>
-  var t = setTimeout(function(){ window.location.href = "https://muse.ai"; }, 4000);
-  document.addEventListener("click", function(){ clearTimeout(t); }, { once:true });
+  var DEST = "https://muse.ai";
+  var statusEl = document.getElementById("status");
+  var barEl = document.getElementById("bar");
+  var autoStateEl = document.getElementById("autoState");
+  var timer = null, countdown = null, secs = 5;
+
+  var auto = true;
+  try { auto = localStorage.getItem("museLauncherAuto") !== "off"; } catch (e) {}
+
+  function renderAuto() { autoStateEl.textContent = auto ? "ON" : "OFF"; }
+  function stopAuto(msg) {
+    if (timer) { clearTimeout(timer); timer = null; }
+    if (countdown) { clearInterval(countdown); countdown = null; }
+    barEl.classList.remove("go");
+    if (msg) statusEl.innerHTML = msg;
+  }
+  function startAuto() {
+    stopAuto();
+    secs = 5;
+    statusEl.innerHTML = "Launching Muse in <b>" + secs + "</b>&hellip; tap ENTER MUSE to go now.";
+    barEl.classList.add("go");
+    countdown = setInterval(function() {
+      secs--;
+      if (secs > 0) { statusEl.innerHTML = "Launching Muse in <b>" + secs + "</b>&hellip; tap ENTER MUSE to go now."; }
+    }, 1000);
+    timer = setTimeout(function() { window.location.href = DEST; }, 5000);
+  }
+
+  document.getElementById("autoToggle").addEventListener("click", function(ev) {
+    ev.preventDefault(); ev.stopPropagation();
+    auto = !auto;
+    try { localStorage.setItem("museLauncherAuto", auto ? "on" : "off"); } catch (e) {}
+    renderAuto();
+    if (auto) { startAuto(); }
+    else { stopAuto("Auto-launch off. Tap <b>ENTER MUSE</b><br>whenever you're ready."); }
+  });
+
+  // Any tap outside the toggle and links pauses the countdown so the screen can be enjoyed.
+  document.body.addEventListener("click", function() {
+    if (timer) { stopAuto("Auto-launch paused. Tap <b>ENTER MUSE</b><br>whenever you're ready."); }
+  });
+
+  renderAuto();
+  if (auto) { startAuto(); }
 </script>
 </body>
 </html>
