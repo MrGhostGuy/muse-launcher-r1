@@ -104,6 +104,37 @@
   .tag { font-size:8.5px; font-weight:700; letter-spacing:2px; color:#00e5ff; text-transform:uppercase; }
   .card h3 { font-size:13.5px; margin:1px 0 2px; color:#eafff2; letter-spacing:.5px; }
   .card p { font-size:10.5px; line-height:1.35; color:#9fd8b4; }
+
+  .menubtn {
+    font-family:inherit; font-size:10px; font-weight:700; letter-spacing:2px; cursor:pointer;
+    color:#39ff88; background:rgba(2,24,12,.7); border:1px solid rgba(57,255,136,.6);
+    border-radius:8px; padding:4px 9px; text-shadow:0 0 7px rgba(57,255,136,.8);
+    box-shadow:0 0 10px rgba(57,255,136,.25), inset 0 0 8px rgba(57,255,136,.12);
+  }
+  .menubtn:active { background:rgba(10,60,30,.85); }
+  .dropdown {
+    position:absolute; top:30px; right:8px; z-index:6; width:172px;
+    background:linear-gradient(180deg, rgba(3,28,15,.97), rgba(1,14,8,.97));
+    border:1px solid rgba(57,255,136,.65); border-radius:12px; overflow:hidden;
+    box-shadow:0 0 24px rgba(57,255,136,.35), 0 0 60px rgba(0,229,255,.15), inset 0 0 18px rgba(57,255,136,.06);
+    opacity:0; transform:translateY(-8px) scale(.97); pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .dropdown.open { opacity:1; transform:translateY(0) scale(1); pointer-events:auto; }
+  .dropdown .dhead {
+    font-size:9px; letter-spacing:3px; color:#00e5ff; text-align:left;
+    padding:7px 12px 5px; border-bottom:1px solid rgba(0,229,255,.25);
+    text-shadow:0 0 7px rgba(0,229,255,.8);
+  }
+  .dropdown a {
+    display:flex; align-items:center; gap:9px; text-decoration:none; text-align:left;
+    color:#d8ffe9; font-size:13px; letter-spacing:1px; padding:9px 12px; min-height:38px;
+    border-bottom:1px solid rgba(118,255,140,.10);
+  }
+  .dropdown a:last-child { border-bottom:none; }
+  .dropdown a:active { background:rgba(57,255,136,.14); color:#fff; }
+  .dropdown a svg { flex:0 0 auto; }
+  .dropdown .dfoot { font-size:8.5px; letter-spacing:1px; color:#7fd8a8; text-align:left; padding:6px 12px 8px; }
   .toast {
     position:absolute; left:10px; right:10px; bottom:10px; z-index:5;
     background:rgba(2,24,12,.95); border:1px solid #39ff88; border-radius:12px;
@@ -116,7 +147,18 @@
 <body>
   <div class="stars"></div><div class="stars2"></div><div class="nebula"></div>
 
-  <div class="hud"><span id="clock">--:--</span><span><span class="dot">&#9679;</span> MUSE&nbsp;OS</span><span id="date">&nbsp;</span></div>
+  <div class="hud"><span><span id="clock">--:--</span> <span id="date"></span></span><button class="menubtn" id="menuBtn" type="button">&#9776;&nbsp;TABS</button></div>
+  <div class="dropdown" id="dropdown">
+    <div class="dhead">MUSE // NAVIGATION</div>
+    <a href="https://muse.ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-3-.4-4.2-1.1L3 20l1.1-5.3A8.5 8.5 0 1 1 21 11.5z"/></svg>Chat</a>
+    <a href="https://muse.ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39ff88" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>Search</a>
+    <a href="https://muse.ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4.5 13.5H11L9.5 22 19 10h-6.5L13 2z"/></svg>Feed</a>
+    <a href="https://muse.ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-4 10.5c.8.7 1 1.5 1 2.5h6c0-1 .2-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>Ideas</a>
+    <a href="https://muse.ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39ff88" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="#39ff88"/></svg>Goals</a>
+    <a href="https://muse.ai"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#39ff88" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg>Library</a>
+    <div class="dfoot">OPENS MUSE — FULL FEATURES INSIDE</div>
+  </div>
+
 
   <!-- LAUNCH VIEW -->
   <div class="view" id="launchView">
@@ -226,6 +268,19 @@
   document.body.addEventListener("click", function() {
     if (timer) stopAuto("Auto-launch paused. Tap <b>ENTER MUSE</b><br>whenever you're ready.");
   });
+
+
+  /* tabs dropdown */
+  var dropdown = document.getElementById("dropdown");
+  var menuBtn = document.getElementById("menuBtn");
+  menuBtn.addEventListener("click", function(ev) {
+    ev.stopPropagation();
+    var opening = !dropdown.classList.contains("open");
+    dropdown.classList.toggle("open");
+    if (opening) stopAuto("Auto-launch paused. Pick a tab,<br>or tap <b>ENTER MUSE</b>.");
+  });
+  dropdown.addEventListener("click", function(ev) { ev.stopPropagation(); });
+  document.body.addEventListener("click", function() { dropdown.classList.remove("open"); });
 
   /* views */
   var launchView = document.getElementById("launchView");
